@@ -35,6 +35,13 @@ The easiest way to deploy your Next.js app is to use the [Vercel Platform](https
 
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
 
+## Usefull commands
+
+Generate types from Supabase:
+```
+npx supabase gen types typescript --project-id <project_id> > src/database.types.ts
+```
+
 ## Supabase note
 
 Be careful when protecting pages. The server gets the user session from the cookies, which can be spoofed by anyone.
