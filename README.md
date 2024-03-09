@@ -44,3 +44,9 @@ Always use `supabase.auth.getUser()` to protect pages and user data.
 Never trust `supabase.auth.getSession()` inside server code such as middleware. It isn't guaranteed to revalidate the Auth token.
 
 It's safe to trust `getUser()` because it sends a request to the Supabase Auth server every time to revalidate the Auth token.
+
+## Stack
+
+- Next.js
+- Supabase
+- Resend
