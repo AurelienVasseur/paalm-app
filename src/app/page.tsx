@@ -1,3 +1,4 @@
+import Hero from "@/components/home/Hero";
 import { Button } from "@/components/ui/button";
 import { createClient } from "@/lib/supabase/server";
 
@@ -10,9 +11,12 @@ export default async function Home() {
     .order("created_at", { ascending: false });
   
   return (
-    <div>
-      <Button>Click Me</Button>
-      <pre>{JSON.stringify(data, null, 2)}</pre>
-    </div>
+    <>
+      <Hero />
+    </>
+    // <div>
+    //   <Button>Click Me</Button>
+    //   <pre>{JSON.stringify(data, null, 2)}</pre>
+    // </div>
   );
 }
