@@ -8,10 +8,12 @@ import {
   NavigationMenuList,
   NavigationMenuTrigger,
 } from "@/components/ui/navigation-menu";
+import { toast as toastSonner } from "sonner";
 import { cn } from "@/lib/utils";
 import React from "react";
 import { User } from "@supabase/supabase-js";
 import { signOut } from "./actions";
+import { useRouter } from "next/navigation";
 
 type Props = {
   user: User | null;
@@ -31,17 +33,17 @@ export default function Header({ user }: Props) {
 const components: { title: string; href: string; description: string }[] = [
   {
     title: "Transactions",
-    href: "/",
+    href: "#",
     description: "Tracks your transactions.",
   },
   {
     title: "Assets",
-    href: "/",
+    href: "/me/assets",
     description: "Customize your assets.",
   },
   {
     title: "Providers",
-    href: "/",
+    href: "#",
     description: "Register your providers and brokers.",
   },
 ];
@@ -51,9 +53,14 @@ export function NavigationMenuApp({
 }: {
   isAuthenticated: boolean;
 }) {
+  const router = useRouter();
+
   const handleSignOut = async () => {
-    console.log("Log out");
     await signOut();
+    toastSonner("Bye! See you soon 👋", {
+      description: "Account successfully logged out",
+    });
+    router.push("/");
   };
 
   return (
@@ -76,10 +83,10 @@ export function NavigationMenuApp({
                   </a>
                 </NavigationMenuLink>
               </li>
-              <ListItem href="/" title="My space">
+              <ListItem href="/me" title="My space">
                 Manage your wallet and track performance.
               </ListItem>
-              <ListItem href="/" title="Discover">
+              <ListItem href="#" title="Discover">
                 Learn how to use the app.
               </ListItem>
               {isAuthenticated && (
@@ -99,7 +106,7 @@ export function NavigationMenuApp({
                   <NavigationMenuLink asChild>
                     <a
                       className="flex h-full w-full select-none flex-col justify-end rounded-md bg-gradient-to-b from-muted/50 to-muted p-6 no-underline outline-none focus:shadow-md"
-                      href="/"
+                      href="/me"
                     >
                       <div className="mb-2 mt-4 text-lg font-medium">
                         Wallet
