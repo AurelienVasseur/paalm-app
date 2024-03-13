@@ -57,3 +57,5 @@ It's safe to trust `getUser()` because it sends a request to the Supabase Auth s
 - Next.js
 - Supabase
 - Resend
+- shadcn/ui
+- aceternity ui

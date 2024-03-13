@@ -74,3 +74,13 @@
     @apply bg-background text-foreground;
   }
 }
+
+@layer utilities {
+  .max-container {
+    @apply mx-auto max-w-[1440px];
+  }
+
+  .padding-container {
+    @apply px-6 lg:px-20 2xl:px-0;
+  }
+}
