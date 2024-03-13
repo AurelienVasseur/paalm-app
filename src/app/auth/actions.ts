@@ -1,34 +1,21 @@
 "use server";
 
-import { revalidatePath } from "next/cache";
-import { redirect } from "next/navigation";
-
 import { createClient } from "@/lib/supabase/server";
 
-export async function login(formData: FormData) {
+export async function login(email: string) {
   const supabase = createClient();
-  // type-casting here for convenience
-  // in practice, you should validate your inputs
-  const data = {
-    email: formData.get("email") as string,
-  };
+  const data = { email };
   const { error } = await supabase.auth.signInWithOtp({
     email: data.email,
   });
-  if (error) {
-    redirect("/error");
-  }
-  // revalidatePath("/", "layout");
-  redirect("/auth/confirm");
+  return error;
 }
 
-export async function verifyOtp(formData: FormData) {
+export async function verifyOtp(email: string, token: string) {
   const supabase = createClient();
-  // type-casting here for convenience
-  // in practice, you should validate your inputs
   const data = {
-    email: formData.get("email") as string,
-    token: formData.get("token") as string,
+    email,
+    token,
   };
   const {
     data: { session },
@@ -38,10 +25,5 @@ export async function verifyOtp(formData: FormData) {
     token: data.token,
     type: "email",
   });
-
-  if (error) {
-    redirect("/error");
-  }
-  revalidatePath("/", "layout");
-  redirect("/private");
+  return error;
 }

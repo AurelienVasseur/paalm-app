@@ -1,7 +1,6 @@
-import Hero from "@/components/home/Hero";
-import { Button } from "@/components/ui/button";
 import { createClient } from "@/lib/supabase/server";
 import BentoGrid from "@/components/me/BentoGrid"
+import BreadcrumbNav from "@/components/BreadcrumbNav";
 
 export default async function Home() {
   const supabase = createClient();
@@ -13,15 +12,8 @@ export default async function Home() {
   
   return (
     <>
-      <Hero />
-      {/* <BentoGrid /> */}
-      {/* <Hero />
-      <Hero />
-      <Hero /> */}
+      <BreadcrumbNav current="Home" />
+      <BentoGrid />
     </>
-    // <div>
-    //   <Button>Click Me</Button>
-    //   <pre>{JSON.stringify(data, null, 2)}</pre>
-    // </div>
   );
 }

@@ -3,21 +3,15 @@
 import {
   NavigationMenu,
   NavigationMenuContent,
-  NavigationMenuIndicator,
   NavigationMenuItem,
   NavigationMenuLink,
   NavigationMenuList,
   NavigationMenuTrigger,
-  NavigationMenuViewport,
-  navigationMenuTriggerStyle,
 } from "@/components/ui/navigation-menu";
-import Link from "next/link";
-
 import { cn } from "@/lib/utils";
-// import { Icons } from "@/components/icons"
-
 import React from "react";
 import { User } from "@supabase/supabase-js";
+import { signOut } from "./actions";
 
 type Props = {
   user: User | null;
@@ -25,9 +19,12 @@ type Props = {
 
 export default function Header({ user }: Props) {
   return (
-    <nav className="flex w-full p-5 items-center justify-center">
-      <NavigationMenuApp isAuthenticated={user ? true : false} />
-    </nav>
+    <header className="sticky top-0 z-30 flex w-full p-5 items-center justify-center">
+      <div className="flex flex-row gap-2 backdrop-filter backdrop-blur-sm rounded-full bg-white/50 border border-slate-200 bg-opacity-30 px-5 py-1 items-center">
+        <div className="bg-slate-900 h-[20px] w-[20px] rounded-full"></div>
+        <NavigationMenuApp isAuthenticated={user ? true : false} />
+      </div>
+    </header>
   );
 }
 
@@ -54,6 +51,11 @@ export function NavigationMenuApp({
 }: {
   isAuthenticated: boolean;
 }) {
+  const handleSignOut = async () => {
+    console.log("Log out");
+    await signOut();
+  };
+
   return (
     <NavigationMenu>
       <NavigationMenuList>
@@ -67,7 +69,6 @@ export function NavigationMenuApp({
                     className="flex h-full w-full select-none flex-col justify-end rounded-md bg-gradient-to-b from-muted/50 to-muted p-6 no-underline outline-none focus:shadow-md"
                     href="/"
                   >
-                    {/* <Icons.logo className="h-6 w-6" /> */}
                     <div className="mb-2 mt-4 text-lg font-medium">Paalm</div>
                     <p className="text-sm leading-tight text-muted-foreground">
                       Track and manage your investments with ease.
@@ -82,7 +83,7 @@ export function NavigationMenuApp({
                 Learn how to use the app.
               </ListItem>
               {isAuthenticated && (
-                <ListItem href="/" title="Log out">
+                <ListItem onClick={handleSignOut} title="Log out">
                   Disconnect your account.
                 </ListItem>
               )}
@@ -93,7 +94,22 @@ export function NavigationMenuApp({
           <NavigationMenuItem>
             <NavigationMenuTrigger>Manage</NavigationMenuTrigger>
             <NavigationMenuContent>
-              <ul className="grid w-[400px] gap-3 p-4 md:w-[500px] md:grid-cols-2 lg:w-[600px] ">
+              <ul className="grid gap-3 p-6 md:w-[400px] lg:w-[500px] lg:grid-cols-[.75fr_1fr]">
+                <li className="row-span-3">
+                  <NavigationMenuLink asChild>
+                    <a
+                      className="flex h-full w-full select-none flex-col justify-end rounded-md bg-gradient-to-b from-muted/50 to-muted p-6 no-underline outline-none focus:shadow-md"
+                      href="/"
+                    >
+                      <div className="mb-2 mt-4 text-lg font-medium">
+                        Wallet
+                      </div>
+                      <p className="text-sm leading-tight text-muted-foreground">
+                        Measure your performance.
+                      </p>
+                    </a>
+                  </NavigationMenuLink>
+                </li>
                 {components.map((component) => (
                   <ListItem
                     key={component.title}

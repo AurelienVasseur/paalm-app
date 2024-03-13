@@ -2,8 +2,10 @@ import type { Metadata } from "next";
 import { Inter as FontSans } from "next/font/google";
 import "./globals.css";
 import { cn } from "@/lib/utils";
-import Header from "@/components/Header";
+import Header from "@/components/Header/index";
 import { createClient } from "@/lib/supabase/server";
+import { Toaster as ToasterSonner } from "@/components/ui/sonner";
+import { Toaster } from "@/components/ui/toaster"
 
 const fontSans = FontSans({
   subsets: ["latin"],
@@ -34,6 +36,8 @@ export default async function RootLayout({
       >
         <Header user={data?.user} />
         <main>{children}</main>
+        <Toaster />
+        <ToasterSonner />
       </body>
     </html>
   );
