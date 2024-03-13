@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
+import { z } from "zod";
 import {
   Card,
   CardContent,
@@ -24,8 +25,13 @@ type Props = {
 };
 
 export default function SignInCard({ callback }: Props) {
+  const emailSchema = z.string().email();
+  const otpSchema = z.string().regex(/^\d+$/).length(6);
+
   const [otp, setOtp] = useState("");
+  const [isOtpValid, setIsOtpValid] = useState(false);
   const [email, setEmail] = useState("");
+  const [isEmailValid, setIsEmailValid] = useState(false);
   const [codeSent, setCodeSent] = useState(false);
   const [disableForm, setDisableForm] = useState(false);
   const [sendOtpLoading, setSendOtpLoading] = useState(false);
@@ -34,6 +40,16 @@ export default function SignInCard({ callback }: Props) {
 
   const { toast } = useToast();
   const router = useRouter();
+
+  useEffect(() => {
+    const { success } = emailSchema.safeParse(email);
+    setIsEmailValid(success);
+  }, [email, emailSchema]);
+
+  useEffect(() => {
+    const { success } = otpSchema.safeParse(otp);
+    setIsOtpValid(success);
+  }, [otp, otpSchema]);
 
   useEffect(() => {
     counter > 0 && setTimeout(() => setCounter(counter - 1), 1000);
@@ -103,6 +119,11 @@ export default function SignInCard({ callback }: Props) {
                     setEmail(event.target.value);
                   }}
                 />
+                {!isEmailValid && (
+                  <p className="text-sm text-muted-foreground">
+                    Enter your email address.
+                  </p>
+                )}
               </div>
               {codeSent && (
                 <div className="flex flex-col space-y-1.5">
@@ -121,6 +142,11 @@ export default function SignInCard({ callback }: Props) {
                       </InputOTPGroup>
                     )}
                   />
+                  {!isOtpValid && (
+                    <p className="text-sm text-muted-foreground">
+                      Enter your one-time password.
+                    </p>
+                  )}
                 </div>
               )}
             </div>
@@ -131,7 +157,7 @@ export default function SignInCard({ callback }: Props) {
             variant="outline"
             onClick={handleSendCode}
             className={`relative ${codeSent ? "" : "hidden"}`}
-            disabled={!email || disableForm || counter > 0}
+            disabled={!isEmailValid || disableForm || counter > 0}
           >
             {sendOtpLoading && (
               <Loader2 className="mr-2 h-4 w-4 animate-spin" />
@@ -140,7 +166,7 @@ export default function SignInCard({ callback }: Props) {
           </Button>
           <Button
             onClick={codeSent ? handleSubmitCode : handleSendCode}
-            disabled={!email || (codeSent && !otp) || disableForm}
+            disabled={!isEmailValid || (codeSent && !isOtpValid) || disableForm}
           >
             {((!codeSent && sendOtpLoading) ||
               (codeSent && submitOtpLoading)) && (
