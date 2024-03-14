@@ -1,5 +1,5 @@
 import BreadcrumbNav from "@/components/BreadcrumbNav";
-import AssetList from "@/components/me/assets/AssetList";
+import AssetList from "@/components/me/assets/AssetList/index";
 import { createClient } from "@/lib/supabase/server";
 import { redirect } from "next/navigation";
 
