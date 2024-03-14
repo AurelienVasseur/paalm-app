@@ -3,9 +3,8 @@ import { Inter as FontSans } from "next/font/google";
 import "./globals.css";
 import { cn } from "@/lib/utils";
 import Header from "@/components/Header/index";
-import { createClient } from "@/lib/supabase/server";
 import { Toaster as ToasterSonner } from "@/components/ui/sonner";
-import { Toaster } from "@/components/ui/toaster"
+import { Toaster } from "@/components/ui/toaster";
 
 const fontSans = FontSans({
   subsets: ["latin"],
@@ -22,10 +21,6 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const supabase = createClient();
-
-  const { data, error } = await supabase.auth.getUser();
-
   return (
     <html lang="en">
       <body
@@ -34,7 +29,7 @@ export default async function RootLayout({
           fontSans.variable
         )} bg-dot-black/[0.1]`}
       >
-        <Header user={data?.user} />
+        <Header />
         <main>{children}</main>
         <Toaster />
         <ToasterSonner />

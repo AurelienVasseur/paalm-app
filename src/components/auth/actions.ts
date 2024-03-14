@@ -8,7 +8,8 @@ export async function login(email: string) {
   const { error } = await supabase.auth.signInWithOtp({
     email: data.email,
   });
-  return error;
+  const res = { error };
+  return JSON.stringify(res);
 }
 
 export async function verifyOtp(email: string, token: string) {
@@ -25,5 +26,6 @@ export async function verifyOtp(email: string, token: string) {
     token: data.token,
     type: "email",
   });
-  return error;
+  const res = { error };
+  return JSON.stringify(res);
 }
