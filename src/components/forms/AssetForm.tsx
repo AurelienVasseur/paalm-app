@@ -62,17 +62,8 @@ export default function AssetForm({ onSave }: Props) {
     onSave(data ? data[0] : null, error);
   }
 
-  // async function actionTest() {
-  //   const values = form.getValues();
-  //   setIsLoading(true);
-  //   const { data, error } = await saveAsset(values);
-  //   setIsLoading(false);
-  //   onSave(data ? data[0] : null, error);
-  // } 
-
   return (
     <Form {...form}>
-      {/* onSubmit={form.handleSubmit(onSubmit)} */}
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
         <FormField
           control={form.control}
