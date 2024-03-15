@@ -23,7 +23,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "../ui/select";
-import { assetTypes } from "@/models/assetTypes";
+import { assetTypesList } from "@/models/assetTypes";
 import { saveAsset } from "./actions";
 import { Loader2 } from "lucide-react";
 import { PostgrestError } from "@supabase/supabase-js";
@@ -110,7 +110,7 @@ export default function AssetForm({ onSave }: Props) {
                   </SelectTrigger>
                 </FormControl>
                 <SelectContent>
-                  {assetTypes.map((assetType) => (
+                  {assetTypesList.map((assetType) => (
                     <SelectItem key={assetType.value} value={assetType.value}>
                       <div className="flex flex-row gap-2 items-center">
                         <assetType.icon className="h-4 w-4" />

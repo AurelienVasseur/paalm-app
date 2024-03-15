@@ -2,7 +2,7 @@ import BentoCard from "@/components/BentoCard";
 import { createClient } from "@/lib/supabase/server";
 import React from "react";
 import NewAsset from "./NewAsset";
-import AssetBadge from "@/components/AssetBadge";
+import AssetInfo from "./AssetInfo";
 
 export default async function AssetList() {
   const supabase = createClient();
@@ -18,7 +18,7 @@ export default async function AssetList() {
         <div className="flex gap-2 flex-wrap">
           <NewAsset />
           {assets.map((asset) => (
-            <AssetBadge key={asset.id} asset={asset} />
+            <AssetInfo key={asset.id} asset={asset} />
           ))}
         </div>
       </BentoCard>

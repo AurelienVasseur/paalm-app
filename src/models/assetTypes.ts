@@ -12,7 +12,7 @@ type AssetType = {
   icon: LucideIcon;
 };
 
-export const assetTypes: AssetType[] = [
+export const assetTypesList: AssetType[] = [
   {
     value: "FIAT",
     label: "Fiat",
@@ -34,3 +34,7 @@ export const assetTypes: AssetType[] = [
     icon: GalleryHorizontalEnd,
   },
 ];
+
+export const getAssetTypeInfos = (
+  value: Database["public"]["Enums"]["asset_type"]
+) => assetTypesList.find((type) => type.value === value);
