@@ -6,8 +6,10 @@ import Filters from "./Filters";
 import NewAsset from "./NewAsset";
 import AssetBadge from "@/components/AssetBadge";
 
+type Asset = Database["public"]["Tables"]["assets"]["Row"];
+
 type Props = {
-  assets: Database["public"]["Tables"]["assets"]["Row"][];
+  assets: Asset[];
 };
 
 export default function Content({ assets }: Props) {
@@ -22,7 +24,7 @@ export default function Content({ assets }: Props) {
           setFilteredAssets={setFilteredAssets}
         />
       </div>
-      <div className="flex gap-2">
+      <div className="flex gap-2 flex-wrap">
         <NewAsset />
         {filteredAssets.map((asset) => (
           <AssetBadge key={asset.id} asset={asset} />
