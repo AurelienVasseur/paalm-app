@@ -29,7 +29,7 @@ export default function NewAsset() {
       });
       return;
     }
-    toast("🎉 Asset has been created", {
+    toast(`🎉 Asset ${data.ticker} ${data.label} has been created`, {
       description: "You can now create transactions with it",
     });
   };
