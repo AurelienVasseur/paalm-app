@@ -14,6 +14,9 @@ import {
 import { getAssetTypeInfos } from "@/models/assetTypes";
 import React, { useState } from "react";
 import DeleteAsset from "./DeleteAsset";
+import AssetForm from "@/components/forms/AssetForm";
+import { PostgrestError } from "@supabase/supabase-js";
+import { toast } from "sonner";
 
 type Props = {
   asset: Database["public"]["Tables"]["assets"]["Row"];
@@ -21,12 +24,31 @@ type Props = {
 
 export default function AssetInfo({ asset }: Props) {
   const [showDelete, setShowDelete] = useState(false);
+  const [showEdit, setShowEdit] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const assetTypeInfos = getAssetTypeInfos(asset.type);
   const assetCreationDate = new Date(asset.created_at).toLocaleDateString();
 
-  const handleDelete = async () => {
+  const handleDelete = () => {
     setShowDelete(true);
+  };
+
+  const handleEdit = () => {
+    setShowEdit(true);
+  };
+
+  const handleOnSaveEdit = (
+    data: Database["public"]["Tables"]["assets"]["Row"] | null,
+    error: PostgrestError | null
+  ) => {
+    setShowEdit(false);
+    if (!data || error) {
+      setIsOpen(false);
+      toast("Update failed! Someting went wrong.", {
+        description: "Please wait and try again",
+      });
+      return;
+    }
   };
 
   return (
@@ -51,28 +73,44 @@ export default function AssetInfo({ asset }: Props) {
                   )}
                 </SheetDescription>
               </SheetHeader>
-              <div>
-                <p>Description</p>
-                <p className="text-sm text-muted-foreground">
-                  {asset.description || "No description"}
-                </p>
-              </div>
-              <div>
-                <p>Creation date</p>
-                <p className="text-sm text-muted-foreground">
-                  {assetCreationDate}
-                </p>
-              </div>
-              <SheetFooter>
-                <Button
-                  variant="outline"
-                  onClick={handleDelete}
-                  disabled={showDelete}
-                >
-                  Delete
-                </Button>
-                <Button disabled={showDelete}>Edit</Button>
-              </SheetFooter>
+              {showEdit ? (
+                <>
+                  <AssetForm
+                    onSave={handleOnSaveEdit}
+                    onCancel={() => {
+                      setShowEdit(false);
+                    }}
+                    asset={asset}
+                  />
+                </>
+              ) : (
+                <>
+                  <div>
+                    <p>Description</p>
+                    <p className="text-sm text-muted-foreground">
+                      {asset.description || "No description"}
+                    </p>
+                  </div>
+                  <div>
+                    <p>Creation date</p>
+                    <p className="text-sm text-muted-foreground">
+                      {assetCreationDate}
+                    </p>
+                  </div>
+                  <SheetFooter>
+                    <Button
+                      variant="outline"
+                      onClick={handleDelete}
+                      disabled={showDelete}
+                    >
+                      Delete
+                    </Button>
+                    <Button onClick={handleEdit} disabled={showDelete}>
+                      Edit
+                    </Button>
+                  </SheetFooter>
+                </>
+              )}
               <DeleteAsset
                 show={showDelete}
                 setShow={setShowDelete}

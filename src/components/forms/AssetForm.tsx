@@ -24,7 +24,7 @@ import {
   SelectValue,
 } from "../ui/select";
 import { assetTypesList } from "@/models/assetTypes";
-import { saveAsset } from "./actions";
+import { createAsset, updateAsset } from "./actions";
 import { Loader2 } from "lucide-react";
 import { PostgrestError } from "@supabase/supabase-js";
 
@@ -41,24 +41,27 @@ type Props = {
     error: PostgrestError | null
   ) => void;
   onCancel: () => void;
+  asset?: Database["public"]["Tables"]["assets"]["Row"];
 };
 
-export default function AssetForm({ onSave, onCancel }: Props) {
+export default function AssetForm({ onSave, onCancel, asset }: Props) {
   const [isLoading, setIsLoading] = useState(false);
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      label: "",
-      ticker: "",
-      type: "CRYPTO",
-      description: undefined,
+      label: asset?.label || "",
+      ticker: asset?.ticker || "",
+      type: asset?.type || "CRYPTO",
+      description: asset?.description || undefined,
     },
   });
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
     setIsLoading(true);
-    const { data, error } = await saveAsset(values);
+    const { data, error } = asset
+      ? await updateAsset(asset.id, values)
+      : await createAsset(values);
     setIsLoading(false);
     onSave(data ? data[0] : null, error);
   }
@@ -147,7 +150,7 @@ export default function AssetForm({ onSave, onCancel }: Props) {
             </FormItem>
           )}
         />
-        <div className="flex justify-between">
+        <div className="flex justify-end gap-2">
           <Button
             type="button"
             variant="outline"
