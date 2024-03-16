@@ -40,9 +40,10 @@ type Props = {
     data: Database["public"]["Tables"]["assets"]["Row"] | null,
     error: PostgrestError | null
   ) => void;
+  onCancel: () => void;
 };
 
-export default function AssetForm({ onSave }: Props) {
+export default function AssetForm({ onSave, onCancel }: Props) {
   const [isLoading, setIsLoading] = useState(false);
 
   const form = useForm<z.infer<typeof formSchema>>({
@@ -146,10 +147,20 @@ export default function AssetForm({ onSave }: Props) {
             </FormItem>
           )}
         />
-        <Button type="submit" disabled={isLoading}>
-          {isLoading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
-          {isLoading ? "Please wait" : "Save"}
-        </Button>
+        <div className="flex justify-between">
+          <Button
+            type="button"
+            variant="outline"
+            onClick={onCancel}
+            disabled={isLoading}
+          >
+            Cancel
+          </Button>
+          <Button type="submit" disabled={isLoading}>
+            {isLoading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
+            {isLoading ? "Please wait" : "Save"}
+          </Button>
+        </div>
       </form>
     </Form>
   );

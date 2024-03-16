@@ -34,6 +34,10 @@ export default function NewAsset() {
     });
   };
 
+  const onCancel = () => {
+    setIsOpen(false);
+  };
+
   return (
     <Badge variant="outline" className="border-dashed cursor-pointer">
       <Sheet open={isOpen} onOpenChange={setIsOpen}>
@@ -49,7 +53,7 @@ export default function NewAsset() {
                   An asset is a primitive object in Paalm.
                 </SheetDescription>
               </SheetHeader>
-              <AssetForm onSave={onSave} />
+              <AssetForm onSave={onSave} onCancel={onCancel} />
             </div>
           </ScrollArea>
         </SheetContent>

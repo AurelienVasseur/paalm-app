@@ -14,7 +14,7 @@ export default async function AssetList() {
 
   return (
     <section className="max-container padding-container">
-      <BentoCard title="Assets b">
+      <BentoCard title="Assets">
         <div className="flex gap-2 flex-wrap">
           <NewAsset />
           {assets.map((asset) => (
