@@ -2,7 +2,7 @@
 
 import EditActionSheet from "@/components/EditActionSheet";
 import AssetForm from "@/components/forms/AssetForm";
-import { deleteAsset } from "@/components/me/assets/AssetList/actions";
+import { deleteAsset } from "@/components/me/assets/actions";
 import { getAssetTypeInfos } from "@/models/assetTypes";
 import React, { useState } from "react";
 import { toast } from "sonner";

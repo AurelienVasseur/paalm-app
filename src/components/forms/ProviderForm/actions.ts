@@ -1,33 +1,33 @@
-"use server";
+"use server"
 
 import { z } from "zod";
-import { formSchema } from "./AssetForm";
+import { formSchema } from "./index";
 import { createClient } from "@/lib/supabase/server";
 import { revalidatePath } from "next/cache";
 
-export async function createAsset(values: z.infer<typeof formSchema>) {
+export async function createProvider(values: z.infer<typeof formSchema>) {
   const supabase = createClient();
   const userRes = await supabase.auth.getUser();
   if (!userRes.data.user || userRes.error) throw new Error();
-  let asset = { ...values, user_id: userRes.data.user.id };
-  const { data, error } = await supabase.from("assets").insert(asset).select();
-  revalidatePath("/me/assets");
+  let provider = { ...values, user_id: userRes.data.user.id };
+  const { data, error } = await supabase.from("providers").insert(provider).select();
+  revalidatePath("/me/providers");
   return { data, error };
 }
 
-export async function updateAsset(
-  assetId: string,
+export async function updateProvider(
+  providerId: string,
   values: z.infer<typeof formSchema>
 ) {
   const supabase = createClient();
   const userRes = await supabase.auth.getUser();
   if (!userRes.data.user || userRes.error) throw new Error();
-  let asset = { ...values, user_id: userRes.data.user.id };
+  let provider = { ...values, user_id: userRes.data.user.id };
   const { data, error } = await supabase
-    .from("assets")
-    .update(asset)
-    .eq("id", assetId)
+    .from("providers")
+    .update(provider)
+    .eq("id", providerId)
     .select();
-  revalidatePath("/me/assets");
+  revalidatePath("/me/providers");
   return { data, error };
 }

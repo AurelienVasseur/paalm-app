@@ -1,5 +1,5 @@
 import BreadcrumbNav from "@/components/BreadcrumbNav";
-import AssetList from "@/components/me/assets/AssetList";
+import ProviderList from "@/components/me/providers/ProviderList";
 import { createClient } from "@/lib/supabase/server";
 import { redirect } from "next/navigation";
 
@@ -7,21 +7,21 @@ export default async function Assets() {
   const supabase = createClient();
   const { data, error } = await supabase.auth.getUser();
   if (error || !data?.user) {
-    redirect("/auth?callback=/me/assets");
+    redirect("/auth?callback=/me/providers");
   }
-  const resAssets = await supabase
-    .from("assets")
+  const resProviders = await supabase
+    .from("providers")
     .select("*")
-    .order("ticker", { ascending: true });
-  const assets = resAssets.data || [];
+    .order("label", { ascending: true });
+  const providers = resProviders.data || [];
 
   return (
     <>
       <BreadcrumbNav
         history={[{ path: "/me", label: "Home" }]}
-        current="Assets"
+        current="Providers"
       />
-      <AssetList assets={assets} />
+      <ProviderList providers={providers} />
     </>
   );
 }

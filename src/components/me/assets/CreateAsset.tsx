@@ -34,7 +34,7 @@ export default function CreateAsset() {
       setIsOpen={setIsOpen}
       title="Create a new asset"
       description="An asset is a primitive object in Paalm."
-      textBtn="Click Me"
+      textBtn="New asset"
       variant="create"
     >
       <AssetForm onSave={onSave} onCancel={onCancel} />

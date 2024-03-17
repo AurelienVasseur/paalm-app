@@ -39,11 +39,10 @@ const transactions = [
     },
   },
 ];
-// const assets = ["ETH Ethereum", "BTC Bitcoin", "EGLD MultiversX", "EUR Euro"];
-const providers = ["Kraken", "Binance", "Boursorama", "Coinbase"];
 
 export default async function BentoGrid() {
   const supabase = createClient();
+  // Assets
   const resCountAssets = await supabase
     .from("assets")
     .select("*", { count: "exact", head: true });
@@ -54,6 +53,17 @@ export default async function BentoGrid() {
     .order("ticker", { ascending: true })
     .limit(10);
   const assets = resAssets.data || [];
+  // Providers
+  const resCountProviders = await supabase
+    .from("providers")
+    .select("*", { count: "exact", head: true });
+  const providersCounter = resCountProviders.count || 0;
+  const resProviders = await supabase
+    .from("providers")
+    .select("*")
+    .order("label", { ascending: true })
+    .limit(10);
+  const providers = resProviders.data || [];
 
   return (
     <section className="max-container padding-container flex flex-col justify-center gap-7">
@@ -100,13 +110,18 @@ export default async function BentoGrid() {
               )}
             </div>
           </BentoCard>
-          <BentoCard title="Providers" navigateTo="#">
+          <BentoCard title="Providers" navigateTo="/me/providers">
             <div className="flex gap-2 flex-wrap">
               {providers.map((provider) => (
-                <Badge key={provider} variant="outline">
-                  {provider}
+                <Badge key={provider.id} variant="outline">
+                  {provider.label}
                 </Badge>
               ))}
+              {providersCounter > providers.length && (
+                <Badge variant="outline">
+                  +{providersCounter - providers.length}
+                </Badge>
+              )}
             </div>
           </BentoCard>
         </div>

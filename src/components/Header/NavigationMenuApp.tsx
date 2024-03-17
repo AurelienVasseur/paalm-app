@@ -27,7 +27,7 @@ const components: { title: string; href: string; description: string }[] = [
   },
   {
     title: "Providers",
-    href: "#",
+    href: "/me/providers",
     description: "Register your providers and brokers.",
   },
 ];
