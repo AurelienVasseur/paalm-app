@@ -9,11 +9,6 @@ export default async function Home() {
   if (error || !data?.user) {
     redirect("/auth");
   }
-
-  // const { data } = await supabase
-  //   .from("assets")
-  //   .select("*")
-  //   .order("created_at", { ascending: false });
   
   return (
     <>

@@ -51,7 +51,7 @@ export default async function BentoGrid() {
   const resAssets = await supabase
     .from("assets")
     .select("*")
-    .order("created_at", { ascending: false })
+    .order("ticker", { ascending: true })
     .limit(10);
   const assets = resAssets.data || [];
 
@@ -89,7 +89,7 @@ export default async function BentoGrid() {
         </div>
         <div className="flex gap-4 flex-col">
           <BentoCard title="Assets" navigateTo="/me/assets">
-            <div className="flex gap-2">
+            <div className="flex gap-2 flex-wrap">
               {assets.map((asset) => (
                 <AssetBadge key={asset.id} asset={asset} />
               ))}
@@ -101,7 +101,7 @@ export default async function BentoGrid() {
             </div>
           </BentoCard>
           <BentoCard title="Providers" navigateTo="#">
-            <div className="flex gap-2">
+            <div className="flex gap-2 flex-wrap">
               {providers.map((provider) => (
                 <Badge key={provider} variant="outline">
                   {provider}
