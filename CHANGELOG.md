@@ -13,4 +13,5 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - AUR-13 Shadcn/ui integration
 - AUR-11 Supabase integration
 - AUR-17 Email OPT authentication process implemented
-- AUR-14 Assets CRUD
+- AUR-14 Assets CRUD implemented
+- AUR-15 Providers CRUD implemented

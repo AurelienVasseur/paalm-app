@@ -40,7 +40,7 @@ export default function ActionSheet({
       <Badge
         variant="outline"
         onClick={handleOpen}
-        className={`${variant === "create" && "border-dashed"} cursor-pointer`}
+        className={`${variant === "create" && "border-dashed"} cursor-pointer flex gap-1`}
       >
         {variant === "create" && <Plus className="h-3 w-3" />} {textBtn}
       </Badge>

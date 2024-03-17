@@ -100,7 +100,7 @@ export default async function BentoGrid() {
               )}
             </div>
           </BentoCard>
-          <BentoCard title="Providers" navigateTo="#">
+          <BentoCard title="Providers" navigateTo="/me/providers">
             <div className="flex gap-2 flex-wrap">
               {providers.map((provider) => (
                 <Badge key={provider} variant="outline">
