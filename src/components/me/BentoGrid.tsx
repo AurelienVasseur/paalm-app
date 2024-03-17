@@ -69,7 +69,7 @@ export default async function BentoGrid() {
     <section className="max-container padding-container flex flex-col justify-center gap-7">
       <div className="grid grid-cols-2 gap-4">
         <div>
-          <BentoCard title="Transactions" navigateTo="#">
+          <BentoCard title="Transactions" navigateTo="/me/transactions">
             <div className="flex flex-col gap-4">
               {transactions.map((transaction) => (
                 <div key={transaction.id} className="flex flex-row">
