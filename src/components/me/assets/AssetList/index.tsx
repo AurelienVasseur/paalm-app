@@ -1,24 +1,20 @@
-import BentoCard from "@/components/BentoCard";
-import { createClient } from "@/lib/supabase/server";
 import React from "react";
-import NewAsset from "./NewAsset";
-import AssetInfo from "./AssetInfo";
+import CreateAsset from "./CreateAsset";
+import InfoAsset from "./InfoAsset";
+import BentoCard from "@/components/BentoCard";
 
-export default async function AssetList() {
-  const supabase = createClient();
-  const resAssets = await supabase
-    .from("assets")
-    .select("*")
-    .order("ticker", { ascending: true });
-  const assets = resAssets.data || [];
+type Props = {
+  assets: Database["public"]["Tables"]["assets"]["Row"][];
+};
 
+export default function AssetList({ assets }: Props) {
   return (
     <section className="max-container padding-container">
       <BentoCard title="Assets">
         <div className="flex gap-2 flex-wrap">
-          <NewAsset />
+          <CreateAsset />
           {assets.map((asset) => (
-            <AssetInfo key={asset.id} asset={asset} />
+            <InfoAsset key={asset.id} asset={asset} />
           ))}
         </div>
       </BentoCard>
