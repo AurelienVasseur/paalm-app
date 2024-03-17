@@ -9,7 +9,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
-- Project initialization
-- Shadcn/ui integration
-- Supabase integration
-- Email OPT authentication process implemented
+- AUR-11 Project initialization
+- AUR-13 Shadcn/ui integration
+- AUR-11 Supabase integration
+- AUR-17 Email OPT authentication process implemented
+- AUR-14 Assets CRUD

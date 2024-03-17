@@ -1,6 +1,8 @@
 import React from "react";
 import { Badge } from "../ui/badge";
 import BentoCard from "../BentoCard";
+import { createClient } from "@/lib/supabase/server";
+import AssetBadge from "../AssetBadge";
 
 const transactions = [
   {
@@ -37,10 +39,22 @@ const transactions = [
     },
   },
 ];
-const assets = ["ETH Ethereum", "BTC Bitcoin", "EGLD MultiversX", "EUR Euro"];
+// const assets = ["ETH Ethereum", "BTC Bitcoin", "EGLD MultiversX", "EUR Euro"];
 const providers = ["Kraken", "Binance", "Boursorama", "Coinbase"];
 
-export default function BentoGrid() {
+export default async function BentoGrid() {
+  const supabase = createClient();
+  const resCountAssets = await supabase
+    .from("assets")
+    .select("*", { count: "exact", head: true });
+  const assetsCounter = resCountAssets.count || 0;
+  const resAssets = await supabase
+    .from("assets")
+    .select("*")
+    .order("ticker", { ascending: true })
+    .limit(10);
+  const assets = resAssets.data || [];
+
   return (
     <section className="max-container padding-container flex flex-col justify-center gap-7">
       <div className="grid grid-cols-2 gap-4">
@@ -75,16 +89,19 @@ export default function BentoGrid() {
         </div>
         <div className="flex gap-4 flex-col">
           <BentoCard title="Assets" navigateTo="/me/assets">
-            <div className="flex gap-2">
+            <div className="flex gap-2 flex-wrap">
               {assets.map((asset) => (
-                <Badge key={asset} variant="outline">
-                  {asset}
-                </Badge>
+                <AssetBadge key={asset.id} asset={asset} />
               ))}
+              {assetsCounter > assets.length && (
+                <Badge variant="outline">
+                  +{assetsCounter - assets.length}
+                </Badge>
+              )}
             </div>
           </BentoCard>
           <BentoCard title="Providers" navigateTo="#">
-            <div className="flex gap-2">
+            <div className="flex gap-2 flex-wrap">
               {providers.map((provider) => (
                 <Badge key={provider} variant="outline">
                   {provider}

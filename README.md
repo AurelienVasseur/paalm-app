@@ -59,3 +59,7 @@ It's safe to trust `getUser()` because it sends a request to the Supabase Auth s
 - Resend
 - shadcn/ui
 - aceternity ui
+
+## Notes
+
+`keyof MyType` (documentation)[https://www.typescriptlang.org/docs/handbook/2/keyof-types.html]
