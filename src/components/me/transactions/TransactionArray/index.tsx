@@ -1,12 +1,12 @@
-import React from 'react'
-import { DataTable } from './data-table';
-import { columns } from './columns';
-import { payments } from './sampleData';
+import React from "react";
+import { columns } from "./columns";
+import { transactions } from "./data";
+import { DataTable } from "@/components/DataTable";
 
 export default function TransactionArray() {
   return (
     <section className="max-container padding-container">
-      <DataTable columns={columns} data={payments} />
+      <DataTable columns={columns} data={transactions} />
     </section>
   );
 }

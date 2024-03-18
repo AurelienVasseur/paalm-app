@@ -1,5 +1,6 @@
 import BreadcrumbNav from "@/components/BreadcrumbNav";
 import TestArray from "@/components/me/transactions/TestArray";
+import TestTransactionArray from "@/components/me/transactions/TestTransactionArray";
 import TransactionArray from "@/components/me/transactions/TransactionArray";
 import { createClient } from "@/lib/supabase/server";
 import { redirect } from "next/navigation";
@@ -18,7 +19,8 @@ export default async function Transactions() {
         current="Transactions"
       />
       {/* <TransactionArray /> */}
-      <TestArray />
+      {/* <TestArray /> */}
+      <TransactionArray />
     </>
   );
 }
