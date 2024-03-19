@@ -27,6 +27,7 @@ import { assetTypesList } from "@/models/assetTypes";
 import { createAsset, updateAsset } from "./actions";
 import { Loader2 } from "lucide-react";
 import { PostgrestError } from "@supabase/supabase-js";
+import { Tables } from "@/database.types";
 
 export const formSchema = z.object({
   label: z.string().min(2).max(50),
@@ -36,12 +37,9 @@ export const formSchema = z.object({
 });
 
 type Props = {
-  onSave: (
-    data: Database["public"]["Tables"]["assets"]["Row"] | null,
-    error: PostgrestError | null
-  ) => void;
+  onSave: (data: Tables<"assets"> | null, error: PostgrestError | null) => void;
   onCancel: () => void;
-  asset?: Database["public"]["Tables"]["assets"]["Row"];
+  asset?: Tables<"assets">;
 };
 
 export default function AssetForm({ onSave, onCancel, asset }: Props) {

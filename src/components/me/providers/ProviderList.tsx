@@ -2,9 +2,10 @@ import React from "react";
 import CreateProvider from "./CreateProvider";
 import InfoProvider from "./InfoProvider";
 import BentoCard from "@/components/BentoCard";
+import { Tables } from "@/database.types";
 
 type Props = {
-  providers: Database["public"]["Tables"]["providers"]["Row"][];
+  providers: Tables<"providers">[];
 };
 
 export default function AssetList({ providers }: Props) {

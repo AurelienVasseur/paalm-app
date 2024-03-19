@@ -2,9 +2,10 @@ import React from "react";
 import CreateAsset from "./CreateAsset";
 import InfoAsset from "./InfoAsset";
 import BentoCard from "@/components/BentoCard";
+import { Tables } from "@/database.types";
 
 type Props = {
-  assets: Database["public"]["Tables"]["assets"]["Row"][];
+  assets: Tables<"assets">[];
 };
 
 export default function AssetList({ assets }: Props) {

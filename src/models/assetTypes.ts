@@ -1,3 +1,4 @@
+import { Enums } from "@/database.types";
 import {
   Bitcoin,
   Building,
@@ -7,7 +8,7 @@ import {
 } from "lucide-react";
 
 type AssetType = {
-  value: Database["public"]["Enums"]["asset_type"];
+  value: Enums<"asset_type">;
   label: string;
   icon: LucideIcon;
 };
@@ -35,6 +36,5 @@ export const assetTypesList: AssetType[] = [
   },
 ];
 
-export const getAssetTypeInfos = (
-  value: Database["public"]["Enums"]["asset_type"]
-) => assetTypesList.find((type) => type.value === value);
+export const getAssetTypeInfos = (value: Enums<"asset_type">) =>
+  assetTypesList.find((type) => type.value === value);

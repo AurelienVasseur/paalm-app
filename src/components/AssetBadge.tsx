@@ -6,9 +6,10 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
+import { Tables } from "@/database.types";
 
 type Props = {
-  asset: Database["public"]["Tables"]["assets"]["Row"];
+  asset: Tables<"assets">;
 };
 
 export default function AssetBadge({ asset }: Props) {

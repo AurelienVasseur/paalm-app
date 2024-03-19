@@ -3,11 +3,12 @@
 import EditActionSheet from "@/components/EditActionSheet";
 import ProviderForm from "@/components/forms/ProviderForm";
 import { deleteProvider } from "@/components/me/providers/actions";
+import { Tables } from "@/database.types";
 import React, { useState } from "react";
 import { toast } from "sonner";
 
 type Props = {
-  provider: Database["public"]["Tables"]["providers"]["Row"];
+  provider: Tables<"providers">;
 };
 
 export default function InfoProvider({ provider }: Props) {

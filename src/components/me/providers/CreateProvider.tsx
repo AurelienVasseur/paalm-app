@@ -1,7 +1,8 @@
-"use client"
+"use client";
 
 import ActionSheet from "@/components/ActionSheet";
 import ProviderForm from "@/components/forms/ProviderForm";
+import { Tables } from "@/database.types";
 import { PostgrestError } from "@supabase/supabase-js";
 import React, { useState } from "react";
 import { toast } from "sonner";
@@ -10,7 +11,7 @@ export default function CreateProvider() {
   const [isOpen, setIsOpen] = useState(false);
 
   const onSave = (
-    data: Database["public"]["Tables"]["providers"]["Row"] | null,
+    data: Tables<"providers"> | null,
     error: PostgrestError | null
   ) => {
     setIsOpen(false);

@@ -2,6 +2,7 @@
 
 import ActionSheet from "@/components/ActionSheet";
 import AssetForm from "@/components/forms/AssetForm";
+import { Tables } from "@/database.types";
 import { PostgrestError } from "@supabase/supabase-js";
 import React, { useState } from "react";
 import { toast } from "sonner";
@@ -10,7 +11,7 @@ export default function CreateAsset() {
   const [isOpen, setIsOpen] = useState(false);
 
   const onSave = (
-    data: Database["public"]["Tables"]["assets"]["Row"] | null,
+    data: Tables<"assets"> | null,
     error: PostgrestError | null
   ) => {
     setIsOpen(false);

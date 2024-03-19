@@ -27,6 +27,7 @@ import { assetTypesList } from "@/models/assetTypes";
 import { createProvider, updateProvider } from "./actions";
 import { Loader2 } from "lucide-react";
 import { PostgrestError } from "@supabase/supabase-js";
+import { Tables } from "@/database.types";
 
 export const formSchema = z.object({
   label: z.string().min(2).max(50),
@@ -35,11 +36,11 @@ export const formSchema = z.object({
 
 type Props = {
   onSave: (
-    data: Database["public"]["Tables"]["providers"]["Row"] | null,
+    data: Tables<"providers"> | null,
     error: PostgrestError | null
   ) => void;
   onCancel: () => void;
-  provider?: Database["public"]["Tables"]["providers"]["Row"];
+  provider?: Tables<"providers">;
 };
 
 export default function ProvderForm({ onSave, onCancel, provider }: Props) {
@@ -74,7 +75,9 @@ export default function ProvderForm({ onSave, onCancel, provider }: Props) {
               <FormControl>
                 <Input disabled={isLoading} placeholder="Coinbase" {...field} />
               </FormControl>
-              <FormDescription>This is the provider display name.</FormDescription>
+              <FormDescription>
+                This is the provider display name.
+              </FormDescription>
               <FormMessage />
             </FormItem>
           )}
@@ -93,9 +96,7 @@ export default function ProvderForm({ onSave, onCancel, provider }: Props) {
                   {...field}
                 />
               </FormControl>
-              <FormDescription>
-                A few words about the provider.
-              </FormDescription>
+              <FormDescription>A few words about the provider.</FormDescription>
               <FormMessage />
             </FormItem>
           )}
