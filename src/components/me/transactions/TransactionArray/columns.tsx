@@ -14,6 +14,14 @@ import {
 import { Checkbox } from "@/components/ui/checkbox";
 import { DataTableColumnHeader } from "@/components/DataTable/DataTableColumnHeader";
 
+type AssetMetadata = {
+
+}
+
+type ProviderMetadata = {
+  
+}
+
 export type Transaction = {
   id: string;
   name: string;

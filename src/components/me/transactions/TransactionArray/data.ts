@@ -1,6 +1,8 @@
-export const transactions = [
+import { Transaction } from "./columns";
+
+export const transactions: Transaction[] = [
   {
-    id: 1,
+    id: "1",
     name: "Tx 1",
     from: {
       asset: "ETH Ethereum",
@@ -10,7 +12,7 @@ export const transactions = [
     date: new Date(),
   },
   {
-    id: 2,
+    id: "2",
     name: "Tx 2",
     from: {
       asset: "BTC Bitcoin",
