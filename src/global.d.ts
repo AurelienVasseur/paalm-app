@@ -1,48 +1,40 @@
-import { Database as DB, Enums, Tables } from "@/database.types";
+import { Database as DB, Enums, Tables, TablesInsert } from "@/database.types";
 
-type TransactionAsset = {
-  id: string;
+type TransactionAsset = Tables<"transaction_asset_metadata"> & {
+  asset: Tables<"assets">;
+};
+
+type TransactionAssetLight = {
   quantity: number;
-  price_unit: number;
-  price_total: number;
   asset: {
-    id: string;
     type: Enums<"asset_type">;
     label: string;
     ticker: string;
   };
 };
 
-type TransactionProvider = {
-  id: string;
-  fees: number;
-  method: label;
-  receipt_url: string | null;
-  network_transaction_id: string | null;
-  provider_transaction_id: string | null;
+type TransactionProvider = Tables<"transaction_provider_metadata"> & {
+  provider: Tables<"providers">;
+};
+
+type TransactionProviderLight = {
   provider: {
-    id: string;
     label: string;
-    description: string | null;
   };
 };
 
 declare global {
   // note: we cannot have the same name in right side and left side
   type Database = DB;
-  type TransactionWithMetadata = {
-    id: string;
-    description: string;
-    date: string;
+  type TransactionWithMetadata = Tables<"transactions"> & {
     from: TransactionAsset;
     to: TransactionAsset;
     provider: TransactionProvider;
   };
+  type TransactionWithMetadataLight = {
+    date: string;
+    from: TransactionAssetLight;
+    to: TransactionAssetLight;
+    provider: TransactionProviderLight;
+  };
 }
-
-// Example:
-// type TweetWithAuthor = Tweet & {
-//   author: Profile;
-//   likes: number;
-//   user_has_liked_tweet: boolean;
-// };

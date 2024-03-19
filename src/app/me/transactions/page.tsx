@@ -13,15 +13,21 @@ export default async function Transactions() {
   }
 
   const getFromAsset =
-    "id, quantity, price_unit, price_total, asset: asset_id(id, type, label, ticker)";
+    "quantity, asset: asset_id(type, label, ticker)";
   const getFromProvider =
-    "id, fees, method, receipt_url, network_transaction_id, provider_transaction_id, provider: provider_id(id, label, description)";
+    "provider: provider_id(label)";
   const resTransactions = await supabase
     .from("transactions")
     .select(
-      `id, description, date, from: from_asset_metadata(${getFromAsset}), to: to_asset_metadata(${getFromAsset}), provider: transaction_provider_metadata(${getFromProvider})`
+      `date, from: from_asset_metadata(${getFromAsset}), to: to_asset_metadata(${getFromAsset}), provider: transaction_provider_metadata(${getFromProvider})`
     )
     .order("created_at", { ascending: false });
+  // const resTransactions = await supabase
+  //   .from("transactions")
+  //   .select(
+  //     `*, from: from_asset_metadata(*, asset: asset_id(*)), to: to_asset_metadata(*, asset: asset_id(*)), provider: transaction_provider_metadata(*, provider: provider_id(*))`
+  //   )
+  //   .order("created_at", { ascending: false });
   const transactions = resTransactions.data || [];
 
   return (
