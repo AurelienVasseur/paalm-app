@@ -14,26 +14,7 @@ import {
 import { Checkbox } from "@/components/ui/checkbox";
 import { DataTableColumnHeader } from "@/components/DataTable/DataTableColumnHeader";
 
-type AssetMetadata = {
-
-}
-
-type ProviderMetadata = {
-  
-}
-
-export type Transaction = {
-  id: string;
-  name: string;
-  from: {
-    asset: string;
-    quantity: number;
-  };
-  provider: string;
-  date: Date;
-};
-
-export const columns: ColumnDef<Transaction>[] = [
+export const columns: ColumnDef<TransactionWithMetadataLight>[] = [
   {
     id: "select",
     header: ({ table }) => (
@@ -57,10 +38,14 @@ export const columns: ColumnDef<Transaction>[] = [
     enableHiding: false,
   },
   {
-    accessorKey: "name",
+    accessorKey: "date",
     header: ({ column }) => (
-      <DataTableColumnHeader column={column} title="Name" />
+      <DataTableColumnHeader column={column} title="Date" />
     ),
+    cell: ({ row }) => {
+      const date = new Date(row.getValue("date")).toLocaleDateString();
+      return <div className="font-medium">{date}</div>;
+    },
   },
   {
     accessorKey: "from",
@@ -68,17 +53,25 @@ export const columns: ColumnDef<Transaction>[] = [
       <DataTableColumnHeader column={column} title="From" />
     ),
     cell: ({ row }) => {
-      const from: { asset: string; quantity: string } = row.getValue(
-        "from"
-      ) || {
-        asset: "",
-        quantity: "",
-      };
-      const asset = String(from.asset);
-      const quantity = String(from.quantity);
+      const from: TransactionAssetLight = row.getValue("from");
       return (
         <div className="font-medium">
-          {asset} - {quantity}
+          {from.asset.ticker} {from.asset.label} - {from.quantity} -{" "}
+          {from.asset.type}
+        </div>
+      );
+    },
+  },
+  {
+    accessorKey: "to",
+    header: ({ column }) => (
+      <DataTableColumnHeader column={column} title="To" />
+    ),
+    cell: ({ row }) => {
+      const to: TransactionAssetLight = row.getValue("to");
+      return (
+        <div className="font-medium">
+          {to.asset.ticker} {to.asset.label} - {to.quantity} - {to.asset.type}
         </div>
       );
     },
@@ -88,15 +81,9 @@ export const columns: ColumnDef<Transaction>[] = [
     header: ({ column }) => (
       <DataTableColumnHeader column={column} title="Provider" />
     ),
-  },
-  {
-    accessorKey: "date",
-    header: ({ column }) => (
-      <DataTableColumnHeader column={column} title="Date" />
-    ),
     cell: ({ row }) => {
-      const date = new Date(row.getValue("date")).toLocaleDateString();
-      return <div className="font-medium">{date}</div>;
+      const provider: TransactionProviderLight = row.getValue("provider");
+      return <div className="font-medium">{provider.provider.label}</div>;
     },
   },
 ];

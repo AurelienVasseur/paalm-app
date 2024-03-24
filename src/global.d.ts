@@ -4,23 +4,8 @@ type TransactionAsset = Tables<"transaction_asset_metadata"> & {
   asset: Tables<"assets">;
 };
 
-type TransactionAssetLight = {
-  quantity: number;
-  asset: {
-    type: Enums<"asset_type">;
-    label: string;
-    ticker: string;
-  };
-};
-
 type TransactionProvider = Tables<"transaction_provider_metadata"> & {
   provider: Tables<"providers">;
-};
-
-type TransactionProviderLight = {
-  provider: {
-    label: string;
-  };
 };
 
 declare global {
@@ -30,6 +15,19 @@ declare global {
     from: TransactionAsset;
     to: TransactionAsset;
     provider: TransactionProvider;
+  };
+  type TransactionAssetLight = {
+    quantity: number;
+    asset: {
+      type: Enums<"asset_type">;
+      label: string;
+      ticker: string;
+    };
+  };
+  type TransactionProviderLight = {
+    provider: {
+      label: string;
+    };
   };
   type TransactionWithMetadataLight = {
     date: string;
