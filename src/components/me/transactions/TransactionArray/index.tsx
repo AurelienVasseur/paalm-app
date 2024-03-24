@@ -2,6 +2,7 @@ import React from "react";
 import { columns } from "./columns";
 import { DataTable } from "@/components/DataTable";
 import { createClient } from "@/lib/supabase/server";
+import CreateTransaction from "../CreateTransaction";
 
 export default async function TransactionArray() {
   const supabase = createClient();
@@ -19,7 +20,9 @@ export default async function TransactionArray() {
 
   return (
     <section className="max-container padding-container">
-      <DataTable columns={columns} data={transactions} />
+      <DataTable columns={columns} data={transactions}>
+        <CreateTransaction />
+      </DataTable>
     </section>
   );
 }

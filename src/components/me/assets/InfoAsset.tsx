@@ -55,6 +55,7 @@ export default function InfoAsset({ asset }: Props) {
       description={assetTypeInfos?.label}
       textBtn={`${asset.ticker} ${asset.label}`}
       variant="info"
+      type="badge"
     >
       {isEditMode ? (
         <>

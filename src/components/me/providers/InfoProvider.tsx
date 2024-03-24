@@ -53,6 +53,7 @@ export default function InfoProvider({ provider }: Props) {
       title={provider.label}
       textBtn={provider.label}
       variant="info"
+      type="badge"
     >
       {isEditMode ? (
         <>

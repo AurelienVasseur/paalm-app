@@ -9,11 +9,13 @@ import {
   SheetTitle,
 } from "./ui/sheet";
 import { ScrollArea } from "./ui/scroll-area";
+import { Button } from "./ui/button";
 
 export interface ActionSheetProps {
   isOpen: boolean;
   setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
   variant: "create" | "info";
+  type: "button" | "badge";
   textBtn: string;
   title: string;
   description?: string;
@@ -25,6 +27,7 @@ export default function ActionSheet({
   isOpen,
   setIsOpen,
   variant,
+  type,
   textBtn,
   title,
   description,
@@ -35,15 +38,19 @@ export default function ActionSheet({
     setIsOpen(true);
   };
 
+  const TriggerComponent = type === "badge" ? Badge : Button;
+
   return (
     <>
-      <Badge
+      <TriggerComponent
         variant="outline"
         onClick={handleOpen}
-        className={`${variant === "create" && "border-dashed"} cursor-pointer flex gap-1`}
+        className={`${
+          variant === "create" && "border-dashed"
+        } cursor-pointer flex gap-1`}
       >
         {variant === "create" && <Plus className="h-3 w-3" />} {textBtn}
-      </Badge>
+      </TriggerComponent>
       <Sheet open={isOpen} onOpenChange={setIsOpen}>
         <SheetContent className="p-0">
           <ScrollArea className="h-full w-full">

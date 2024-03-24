@@ -37,6 +37,7 @@ export default function CreateProvider() {
       description="A provider allows you to register transactions."
       textBtn="New provider"
       variant="create"
+      type="badge"
     >
       <ProviderForm onSave={onSave} onCancel={onCancel} />
     </ActionSheet>

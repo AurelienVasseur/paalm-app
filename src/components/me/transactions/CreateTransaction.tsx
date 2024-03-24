@@ -1,13 +1,13 @@
 "use client";
 
 import ActionSheet from "@/components/ActionSheet";
-import AssetForm from "@/components/forms/AssetForm";
+import TransactionForm from "@/components/forms/TransactionForm";
 import { Tables } from "@/database.types";
 import { PostgrestError } from "@supabase/supabase-js";
 import React, { useState } from "react";
 import { toast } from "sonner";
 
-export default function CreateAsset() {
+export default function CreateTransaction() {
   const [isOpen, setIsOpen] = useState(false);
 
   const onSave = (
@@ -33,13 +33,14 @@ export default function CreateAsset() {
     <ActionSheet
       isOpen={isOpen}
       setIsOpen={setIsOpen}
-      title="Create a new asset"
-      description="An asset is a primitive object in Paalm."
-      textBtn="New asset"
+      title="Create a new transaction"
+      description="A transaction is a swap between two assets."
+      textBtn="New transaction"
       variant="create"
-      type="badge"
+      type="button"
     >
-      <AssetForm onSave={onSave} onCancel={onCancel} />
+      {/* <AssetForm onSave={onSave} onCancel={onCancel} /> */}
+      <TransactionForm onCancel={onCancel} />
     </ActionSheet>
   );
 }

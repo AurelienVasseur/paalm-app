@@ -15,3 +15,4 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - AUR-17 Email OPT authentication process implemented
 - AUR-14 Assets CRUD implemented
 - AUR-15 Providers CRUD implemented
+- AUR-16 Transactions CRUD implemented
